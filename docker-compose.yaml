@@ -1,0 +1,61 @@
+services:
+  filters-db:
+    image: postgres:alpine
+    env_file:
+      - ./backend/.env
+    restart: always
+    ports:
+      - '5432:5432'
+    networks:
+      - filtersnetwork
+
+  filters-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    env_file:
+      - ./backend/.env
+    ports:
+      - '4201:4201'
+    networks:
+      - filtersnetwork
+    depends_on:
+      - filters-db
+
+  filters-nextjs:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    depends_on:
+      - filters-backend
+    ports:
+      - '3001:3001'
+    env_file:
+      - ./frontend/.env
+
+    volumes:
+      - filters-nextjs-node-modules:/app/node_modules
+      - filters-nextjs-build:/app/.next
+    restart: always
+    networks:
+      - filtersnetwork
+
+  filters-nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./.nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - filters-nextjs
+    networks:
+      - filtersnetwork
+
+networks:
+  filtersnetwork:
+    driver: bridge
+volumes:
+  filters-nextjs-node-modules:
+  filters-nextjs-build:
