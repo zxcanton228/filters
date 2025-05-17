@@ -6,6 +6,3 @@ Dockerfile
 .github
 .DS_Store
 .idea
-
-.env.development
-.env.tests
