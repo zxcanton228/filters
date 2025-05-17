@@ -14,20 +14,24 @@ export interface IGame {
 	updatedAt: Date
 }
 
-export enum EnumGenre {
-	Action = 'Action',
-	Adventure = 'Adventure',
-	Horror = 'Horror',
-	RPG = 'RPG',
-	Shooter = 'Shooter'
-}
+export const EnumGenre = {
+	Action: 'Action',
+	Adventure: 'Adventure',
+	Horror: 'Horror',
+	RPG: 'RPG',
+	Shooter: 'Shooter',
+} as const
 
-export enum EnumPlatform {
-	Nintendo = 'Nintendo',
-	PC = 'PC',
-	PlayStation = 'PlayStation',
-	Xbox = 'Xbox'
-}
+export type EnumGenre = (typeof EnumGenre)[keyof typeof EnumGenre]
+
+export const EnumPlatform = {
+	Nintendo: 'Nintendo',
+	PC: 'PC',
+	PlayStation: 'PlayStation',
+	Xbox: 'Xbox',
+} as const
+
+export type EnumPlatform = (typeof EnumPlatform)[keyof typeof EnumPlatform]
 
 export type TypePaginationGames = {
 	length: number

@@ -8,7 +8,7 @@ export const GameService = {
 		const { data } = await axiosClassic<TypePaginationGames>({
 			url: GAMES,
 			method: 'GET',
-			params: queryData,
+			params: { ...queryData },
 		})
 
 		return data

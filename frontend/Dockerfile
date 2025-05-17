@@ -14,8 +14,7 @@ RUN bun run build
 FROM oven/bun:1.2.8 AS production
 
 COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/package*.json /app/next.config.mjs /app/.env /app/bun.lock ./
+COPY --from=builder /app/package.json /app/next.config.ts /app/.env /app/bun.lock ./
 
 RUN --mount=type=cache,target=/root/.bun bun install --frozen-lockfile --production
 

@@ -15,12 +15,14 @@ export type TypeGameDataFilters = {
 	perPage: string | number
 }
 
-export enum EnumGameSort {
-	LOW_PRICE = 'LOW_PRICE',
-	HIGH_PRICE = 'HIGH_PRICE',
-	OLDEST = 'OLDEST',
-	NEWEST = 'NEWEST',
-}
+export const EnumGameSort = {
+	LOW_PRICE: 'LOW_PRICE',
+	HIGH_PRICE: 'HIGH_PRICE',
+	OLDEST: 'OLDEST',
+	NEWEST: 'NEWEST',
+} as const
+
+export type EnumGameSort = (typeof EnumGameSort)[keyof typeof EnumGameSort]
 
 export type TypeParamsFilters = {
 	searchParams: TypeGameDataFilters

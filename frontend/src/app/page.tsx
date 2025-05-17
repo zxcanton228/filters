@@ -1,8 +1,5 @@
 import { GameService } from '@/services/game.service'
-import type {
-	TypeGameDataFilters,
-	TypeParamsFilters,
-} from '@/services/game.types'
+import type { TypeGameDataFilters } from '@/services/game.types'
 import { GameExplorer } from './home/GameExplorer'
 
 export const revalidate = 60
@@ -15,8 +12,12 @@ async function getGames(searchParams: TypeGameDataFilters) {
 	return data
 }
 
-export default async function HomePage({ searchParams }: TypeParamsFilters) {
-	const data = await getGames(searchParams)
+export default async function HomePage({
+	searchParams,
+}: {
+	searchParams: Promise<TypeGameDataFilters>
+}) {
+	const data = await getGames(await searchParams)
 
 	return <GameExplorer initialGames={data} />
 }
