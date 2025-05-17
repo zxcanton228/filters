@@ -2,12 +2,14 @@ import { Platform } from '@prisma/client'
 import { IsEnum, IsOptional, IsString } from 'class-validator'
 import { PaginationDto } from 'src/pagination/pagination.dto'
 
-export enum EnumGameSort {
-  LOW_PRICE = 'LOW_PRICE',
-  HIGH_PRICE = 'HIGH_PRICE',
-  OLDEST = 'OLDEST',
-  NEWEST = 'NEWEST',
-}
+export const EnumGameSort = {
+  LOW_PRICE: 'LOW_PRICE',
+  HIGH_PRICE: 'HIGH_PRICE',
+  OLDEST: 'OLDEST',
+  NEWEST: 'NEWEST',
+} as const
+
+export type EnumGameSort = (typeof EnumGameSort)[keyof typeof EnumGameSort]
 
 export class GetAllGameDto extends PaginationDto {
   @IsOptional()
